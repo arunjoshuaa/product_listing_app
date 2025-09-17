@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:product_listing_app/screens/widgets/custom_back_button.dart';
-import 'package:product_listing_app/screens/widgets/custom_button.dart';
+import 'package:product_listing_app/screens/widgets/custom_back_button_widget.dart';
+import 'package:product_listing_app/screens/widgets/custom_button_widget.dart';
 
 class RegisterNameScreen extends StatefulWidget {
   const RegisterNameScreen({super.key});
@@ -20,16 +20,16 @@ class _RegisterNameScreenState extends State<RegisterNameScreen> {
             padding: const EdgeInsets.only(top: 100, left: 20, right: 20),
             child: Column(
               children: [
-                Row(children: [CustomBackButton()]),
+                Row(children: [CustomBackButtonWidget()]),
                 SizedBox(height: 50),
                 TextFormField(
                   decoration: InputDecoration(
-                    labelText: "Enter Full Name"
+                    hintText: "Enter Full Name"
                   ),
               
                 ),
                 SizedBox(height: 40,),
-                CustomButton(buttonText: "Submit", onPressed:() => context.go('/home'), )
+                CustomButtonWidget(buttonText: "Submit", onPressed:() => context.go('/navbar'), )
               ],
             ),
           ),

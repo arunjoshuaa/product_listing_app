@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hyperlink/hyperlink.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:product_listing_app/screens/widgets/custom_button.dart';
+import 'package:product_listing_app/screens/widgets/custom_button_widget.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -23,13 +23,13 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(height: 20),
 
                   IntlPhoneField(
-                    decoration: InputDecoration(labelText: "Enter Phone"),
+                    decoration: InputDecoration(hintText: "Enter Phone"),
                     initialCountryCode: 'IN',
                     onChanged: (number) {
                       print(number.completeNumber);
                     },
                   ),
-CustomButton(buttonText: 'Continue',onPressed: () => context.push('/otp'),),
+CustomButtonWidget(buttonText: 'Continue',onPressed: () => context.push('/otp'),),
                   SizedBox(height: 25,),
                   HyperLink(
                     textStyle: TextStyle(color: Colors.black,fontWeight: FontWeight.w300,fontSize: 10),

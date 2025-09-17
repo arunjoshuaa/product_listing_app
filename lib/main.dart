@@ -33,6 +33,7 @@ class MyApp extends StatelessWidget {
 
         // Style your bottom navigation bar globally.
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          backgroundColor: Colors.amber,
           selectedItemColor: _primaryColor, // Selected icon and label color
           unselectedItemColor: Colors.grey, // Unselected icon and label color
         ),

@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pinput/pinput.dart';
-import 'package:product_listing_app/screens/widgets/custom_back_button.dart';
-import 'package:product_listing_app/screens/widgets/custom_button.dart';
-import 'package:product_listing_app/screens/widgets/otp_field.dart';
+import 'package:product_listing_app/screens/widgets/custom_back_button_widget.dart';
+import 'package:product_listing_app/screens/widgets/custom_button_widget.dart';
+import 'package:product_listing_app/screens/widgets/otp_field_widget.dart';
 
 class OtpScreen extends StatefulWidget {
   const OtpScreen({super.key});
@@ -48,7 +48,7 @@ class _OtpScreenState extends State<OtpScreen> {
             padding: const EdgeInsets.only(top: 100, left: 20, right: 20),
             child: Column(
               children: [
-                Row(children: [CustomBackButton()]),
+                Row(children: [CustomBackButtonWidget()]),
                 SizedBox(height: 30),
                 Row(
                   children: [
@@ -111,7 +111,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   ],
                 ),
                 SizedBox(height: 40),
-                OtpField(),
+                OtpFieldWidget(),
                 SizedBox(height: 20),
                 Text("00:${remainingTime} Sec"),
                 Row(
@@ -133,7 +133,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   ],
                 ),
 
-                CustomButton(buttonText: 'Submit',onPressed: () => context.push('/register'),),
+                CustomButtonWidget(buttonText: 'Submit',onPressed: () => context.push('/register'),),
               ],
             ),
           ),

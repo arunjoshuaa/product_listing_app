@@ -25,14 +25,14 @@ final submittedPinTheme = defaultPinTheme.copyWith(
   ),
   
 );
-class OtpField extends StatefulWidget {
-  const OtpField({super.key});
+class OtpFieldWidget extends StatefulWidget {
+  const OtpFieldWidget({super.key});
 
   @override
-  State<OtpField> createState() => _OtpFieldState();
+  State<OtpFieldWidget> createState() => _OtpFieldWidgetState();
 }
 
-class _OtpFieldState extends State<OtpField> {
+class _OtpFieldWidgetState extends State<OtpFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return  Pinput(
