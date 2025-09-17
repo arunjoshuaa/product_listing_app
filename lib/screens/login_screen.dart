@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hyperlink/hyperlink.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:product_listing_app/screens/widgets/custom_button.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -27,28 +29,20 @@ class LoginScreen extends StatelessWidget {
                       print(number.completeNumber);
                     },
                   ),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 60,
-                    child: ElevatedButton(onPressed: () {}, child: Text("Continue"),style: ElevatedButton.styleFrom(
-                 
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(10))),),),
-                  SizedBox(height: 20,),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10,left: 20,right: 20),
-                    child: HyperLink(
-                      textStyle: TextStyle(color: Colors.black,fontWeight: FontWeight.w300),
-                      
-                      linkStyle: TextStyle(
-                        
-                        decoration: TextDecoration.underline,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w400,
-                        //fontSize: 20,
-                      ),
-                      text:
-                          "By Continuing you accepting the [Terms of Use & Privacy Policy](https://www.google.com)",
+CustomButton(buttonText: 'Continue',onPressed: () => context.push('/otp'),),
+                  SizedBox(height: 25,),
+                  HyperLink(
+                    textStyle: TextStyle(color: Colors.black,fontWeight: FontWeight.w300,fontSize: 10),
+                    
+                    linkStyle: TextStyle(
+                      fontSize: 15,
+                      decoration: TextDecoration.underline,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w400,
+                      //fontSize: 20,
                     ),
+                    text:
+                        "By Continuing you accepting the [Terms of Use & Privacy Policy](https://www.google.com)",
                   ),
                 ],
               ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:product_listing_app/config/app_router.dart';
 import 'package:product_listing_app/screens/splash_screen.dart';
 
 const _primaryColor = Color(0xFF5E5BE2);
@@ -11,9 +12,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+    return  MaterialApp.router(
+      routerConfig: router,
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
       theme:     ThemeData(
         useMaterial3: true,
         // Define a `ColorScheme` from your primary color.

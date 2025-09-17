@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:product_listing_app/screens/login_screen.dart';
 import 'package:another_flutter_splash_screen/another_flutter_splash_screen.dart';
 class SplashScreen extends StatelessWidget {
@@ -9,24 +10,27 @@ class SplashScreen extends StatelessWidget {
     return  Scaffold(
       body: Center(child: 
       
-      FlutterSplashScreen.scale(
-          gradient: const LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Colors.transparent,
-              Colors.transparent,
-            ],
-          ),
-          childWidget: SizedBox(
-            height: 150,
-            child: Image.asset("assets/images/splash_logo.png"),
-          ),
-          duration: const Duration(seconds: 2),
-          animationDuration: const Duration(seconds: 1),
-          onAnimationEnd: () => debugPrint("On Scale End"),
-          nextScreen: const LoginScreen(),
-        )
+        FlutterSplashScreen.scale(
+            gradient: const LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Colors.transparent,
+                Colors.transparent,
+              ],
+            ),
+            childWidget: SizedBox(
+              height: 150,
+              child: Image.asset("assets/images/splash_logo.png"),
+            ),
+            duration: const Duration(seconds: 2),
+            animationDuration: const Duration(seconds: 1),
+              onAnimationEnd: () {
+    debugPrint("On Scale End");
+    // Navigate to LoginScreen after the animation ends
+      context.go('/login');
+  },
+          )
       
       ),
     );
