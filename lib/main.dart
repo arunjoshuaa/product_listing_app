@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:product_listing_app/blocs/banner/banner_bloc.dart';
+import 'package:product_listing_app/blocs/banner/banner_event.dart';
+import 'package:product_listing_app/blocs/product/product_bloc.dart';
+import 'package:product_listing_app/blocs/product/product_event.dart';
 import 'package:product_listing_app/config/app_router.dart';
+import 'package:product_listing_app/repositories/banner_api_service.dart';
+import 'package:product_listing_app/repositories/produc_api_service.dart';
 import 'package:product_listing_app/screens/splash_screen.dart';
 
 const _primaryColor = Color(0xFF5E5BE2);
@@ -12,30 +19,37 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp.router(
-      routerConfig: router,
-      debugShowCheckedModeBanner: false,
-      theme:     ThemeData(
-        useMaterial3: true,
-        // Define a `ColorScheme` from your primary color.
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: _primaryColor,
-          // Your primary color is also the color for selected items.
-          primary: _primaryColor,
-        ),
-        // Style your elevated buttons globally.
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: _primaryColor, // Sets button background color
-            foregroundColor: Colors.white, // Sets button text color
+    return  MultiBlocProvider(
+     providers: [
+      BlocProvider(  create: (context) => ProductBloc(apiService:ProducApiService())..add(FetchProductsEvent()),),
+      BlocProvider(create: (context)=>BannerBloc(bannerApiService:BannerApiService())..add(FetchBannersEvent()))
+    
+      ],
+      child: MaterialApp.router(
+        routerConfig: router,
+        debugShowCheckedModeBanner: false,
+        theme:     ThemeData(
+          useMaterial3: true,
+          // Define a `ColorScheme` from your primary color.
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: _primaryColor,
+            // Your primary color is also the color for selected items.
+            primary: _primaryColor,
           ),
-        ),
-
-        // Style your bottom navigation bar globally.
-        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          backgroundColor: Colors.amber,
-          selectedItemColor: _primaryColor, // Selected icon and label color
-          unselectedItemColor: Colors.grey, // Unselected icon and label color
+          // Style your elevated buttons globally.
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: _primaryColor, // Sets button background color
+              foregroundColor: Colors.white, // Sets button text color
+            ),
+          ),
+      
+          // Style your bottom navigation bar globally.
+          bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+            backgroundColor: Colors.amber,
+            selectedItemColor: _primaryColor, // Selected icon and label color
+            unselectedItemColor: Colors.grey, // Unselected icon and label color
+          ),
         ),
       ),
     );

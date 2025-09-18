@@ -30,14 +30,19 @@ class _ProductCardWidgetState extends State<ProductCardWidget> {
     final primaryColor = Theme.of(context).primaryColor;
 
     return Card(
+      elevation: 0,
+      color: Colors.white,
       child: Column(
         children: [
           Stack(
             children: [
-              SizedBox(
-                height: 150,
-                width: double.infinity,
-                child: Image.asset(widget.image, fit: BoxFit.fill),
+              ClipRRect(
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10)),
+                child: SizedBox(
+                  height: 150,
+                  width: double.infinity,
+                  child: Image.network(widget.image, fit: BoxFit.cover),
+                ),
               ),
               if (widget.isFavouriteButtonVisible)
                 Positioned(
@@ -66,14 +71,14 @@ class _ProductCardWidgetState extends State<ProductCardWidget> {
                   Row(
                     children: [
                       Text(
-                        "\u{20B9} ${widget.price}",
+                        "\u{20B9}${widget.price}\t",
                         style: const TextStyle(
                           decoration: TextDecoration.lineThrough,
                           color: Colors.grey,
                         ),
                       ),
                       Text(
-                        "\u{20B9} ${widget.offerPrice}",
+                        "\u{20B9}${widget.offerPrice}",
                         style: TextStyle(
                           color: primaryColor,
                           fontWeight: FontWeight.bold,
@@ -86,9 +91,12 @@ class _ProductCardWidgetState extends State<ProductCardWidget> {
                   ),
                   const SizedBox(height: 4),
 
+                  // Fix applied here: restrict text to a single line with an ellipsis
                   Text(
                     widget.productName,
                     style: const TextStyle(fontWeight: FontWeight.bold),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),
