@@ -11,13 +11,25 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List productNames = [
+  List popularProductNames = [
     "Grain Peppers",
     "Organic Dry Turmeric",
     "Jaggery Powder",
     "Coriander Powder",
   ];
-  List images = [
+    List latestProductNames = [
+    "Grain Peppers",
+    "Organic Dry Turmeric",
+    "Jaggery Powder",
+    "Coriander Powder",
+  ];
+  List popularProductImages = [
+    'assets/images/coriander.png',
+    'assets/images/jaggery.png',
+    'assets/images/pepper.png',
+    'assets/images/turmeric.png',
+  ];
+    List latestProductImages = [
     'assets/images/coriander.png',
     'assets/images/jaggery.png',
     'assets/images/pepper.png',
@@ -46,33 +58,59 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
 
-              SizedBox(
-                height: 680,
-                child: GridView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 30,
-                    mainAxisExtent: 250,
+              GridCards(images: popularProductImages, productNames: popularProductNames),
+                         const Row(
+                children: [
+                  Text(
+                    "Latest Products",
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  itemCount: images.length,
-                  itemBuilder: (context, index) {
-                    return ProductCardWidget(
-                      price: '300',
-                      offerPrice: '200',
-                      rating: '4.5',
-                      image: images[index],
-                      productName: productNames[index],
-                      isFavorite: false,
-                    );
-                  },
-                ),
+                  SizedBox(height: 20),
+                ],
               ),
+                            GridCards(images: latestProductImages, productNames: latestProductNames),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class GridCards extends StatelessWidget {
+  const GridCards({
+    super.key,
+    required this.images,
+    required this.productNames,
+  });
+
+  final List images;
+  final List productNames;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 600,
+      child: GridView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 30,
+          mainAxisExtent: 250,
+        ),
+        itemCount: images.length,
+        itemBuilder: (context, index) {
+          return ProductCardWidget(
+            price: '300',
+            offerPrice: '200',
+            rating: '4.5',
+            image: images[index],
+            productName: productNames[index],
+            isFavorite: false,
+          );
+        },
       ),
     );
   }

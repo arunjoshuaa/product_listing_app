@@ -10,6 +10,8 @@ class WishlistScreen extends StatefulWidget {
 class _WishlistScreenState extends State<WishlistScreen> {
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(body: Center(child: Text("Wishlist Screen"),),);
+    return  Scaffold(
+      appBar: AppBar(title: Text("Whishlist"),),
+      body: Center(child: Text("Wishlist Screen"),),);
   }
 }
