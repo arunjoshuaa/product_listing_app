@@ -1,20 +1,28 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pinput/pinput.dart';
+import 'package:product_listing_app/blocs/auth/register_login/register_login_bloc.dart';
+import 'package:product_listing_app/blocs/auth/register_login/register_login_event.dart';
 import 'package:product_listing_app/screens/widgets/custom_back_button_widget.dart';
 import 'package:product_listing_app/screens/widgets/custom_button_widget.dart';
 import 'package:product_listing_app/screens/widgets/otp_field_widget.dart';
 
 class OtpScreen extends StatefulWidget {
-  const OtpScreen({super.key});
+final  String phoneNumber;
+ final String otp;
+ final bool isuser;
+   const OtpScreen({super.key,required this.phoneNumber,required this.otp,required this.isuser});
 
   @override
   State<OtpScreen> createState() => _OtpScreenState();
 }
 
 class _OtpScreenState extends State<OtpScreen> {
+    final _formKey = GlobalKey<FormState>();
+  final _otpController = TextEditingController();
   int remainingTime = 120;
   late Timer timer;
   //change the time format to MM:SS
@@ -36,7 +44,25 @@ class _OtpScreenState extends State<OtpScreen> {
       });
     });
   }
+  @override
+  void dispose() {
+    _otpController.dispose();
+    timer.cancel();
+    super.dispose();
+  }
 
+ String? _validateOtp(String? otp) {
+    if (otp == null || otp.isEmpty) {
+      return 'Please enter your otp';
+    }
+    if (otp != widget.otp) {
+      return 'Pin is incorrect';
+    }
+      if (otp.length != 4) {
+      return 'OTP must be 4 digits';
+    }
+    return null;
+  }
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
@@ -72,7 +98,7 @@ class _OtpScreenState extends State<OtpScreen> {
                             style: TextStyle(color: Colors.black),
                           ),
                           TextSpan(
-                            text: '-+91-8976500001',
+                            text: '- ${widget.phoneNumber}',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
@@ -98,7 +124,7 @@ class _OtpScreenState extends State<OtpScreen> {
                             ),
                           ),
                           TextSpan(
-                            text: '4789',
+                            text: widget.otp,
                             style: TextStyle(
                               color: primaryColor,
                               fontSize: 25,
@@ -111,7 +137,9 @@ class _OtpScreenState extends State<OtpScreen> {
                   ],
                 ),
                 SizedBox(height: 40),
-                OtpFieldWidget(),
+                Form(
+                  key: _formKey,
+                  child: OtpFieldWidget(otp: widget.otp,controller: _otpController,validator:_validateOtp,)),
                 SizedBox(height: 20),
                 Text("00:${remainingTime} Sec"),
                 Row(
@@ -133,7 +161,21 @@ class _OtpScreenState extends State<OtpScreen> {
                   ],
                 ),
 
-                CustomButtonWidget(buttonText: 'Submit',onPressed: () => context.push('/register'),),
+                CustomButtonWidget(buttonText: 'Submit',onPressed: () { 
+                   if (_formKey.currentState!.validate()) {
+                    
+                    if(widget.isuser==true){
+context.read<RegisterLoginBloc>().add(RegisterLoginSubmitEvent(phoneNumber: widget.phoneNumber, name: ''));
+
+                      context.go('/navbar');
+
+                    }else{
+                      context.push('/register',extra: widget.phoneNumber);
+                    }
+    print("otp valid");
+                   }
+         else{print("OTP invalid");}
+                  },),
               ],
             ),
           ),

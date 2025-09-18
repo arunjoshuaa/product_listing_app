@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pinput/pinput.dart';
 
 final defaultPinTheme = PinTheme(
@@ -26,7 +27,12 @@ final submittedPinTheme = defaultPinTheme.copyWith(
   
 );
 class OtpFieldWidget extends StatefulWidget {
-  const OtpFieldWidget({super.key});
+ final String otp;
+  final TextEditingController controller;
+  final FormFieldValidator<String>? validator;
+
+  const OtpFieldWidget({super.key,required this.otp,required this.controller,
+    this.validator,});
 
   @override
   State<OtpFieldWidget> createState() => _OtpFieldWidgetState();
@@ -36,14 +42,14 @@ class _OtpFieldWidgetState extends State<OtpFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return  Pinput(
+      controller: widget.controller,
 defaultPinTheme: defaultPinTheme,
 focusedPinTheme: focusedPinTheme,
 submittedPinTheme: submittedPinTheme,
-validator: (s) {
-return s == '2222' ? null : 'Pin is incorrect';
-},
+validator: widget.validator,
 pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
 showCursor: true,
+inputFormatters: [FilteringTextInputFormatter.digitsOnly,],
 onCompleted: (pin) => print(pin),
 );
   }

@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:product_listing_app/blocs/auth/register_login/register_login_bloc.dart';
+import 'package:product_listing_app/blocs/auth/register_login/register_login_event.dart';
+import 'package:product_listing_app/blocs/auth/verification/verification_bloc.dart';
+import 'package:product_listing_app/blocs/auth/verification/verification_event.dart';
 import 'package:product_listing_app/blocs/banner/banner_bloc.dart';
 import 'package:product_listing_app/blocs/banner/banner_event.dart';
 import 'package:product_listing_app/blocs/product/product_bloc.dart';
 import 'package:product_listing_app/blocs/product/product_event.dart';
 import 'package:product_listing_app/config/app_router.dart';
+import 'package:product_listing_app/core/storage_service.dart';
+import 'package:product_listing_app/repositories/auth_api_service.dart';
 import 'package:product_listing_app/repositories/banner_api_service.dart';
 import 'package:product_listing_app/repositories/produc_api_service.dart';
 import 'package:product_listing_app/screens/splash_screen.dart';
@@ -22,7 +28,9 @@ class MyApp extends StatelessWidget {
     return  MultiBlocProvider(
      providers: [
       BlocProvider(  create: (context) => ProductBloc(apiService:ProducApiService())..add(FetchProductsEvent()),),
-      BlocProvider(create: (context)=>BannerBloc(bannerApiService:BannerApiService())..add(FetchBannersEvent()))
+      BlocProvider(create: (context)=>BannerBloc(bannerApiService:BannerApiService())..add(FetchBannersEvent())),
+      BlocProvider(create: (context)=>RegisterLoginBloc(registerLoginApiService: AuthApiService(), secureStorageService: SecureStorageService()))
+      
     
       ],
       child: MaterialApp.router(

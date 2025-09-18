@@ -1,3 +1,3 @@
 class AppConstants {
-  static const String baseUrl = "http://skilltestflutter.zybotechlab.com/api";
+  static const String baseUrl = "https://skilltestflutter.zybotechlab.com/api";
 }
