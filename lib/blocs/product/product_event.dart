@@ -5,6 +5,10 @@ abstract class ProductEvent extends Equatable{
   List<Object> get props => [];
 }
 
-class FetchProductsEvent extends ProductEvent{}
+class FetchProducts extends ProductEvent{}
 
+class FilterProductsEvent extends ProductEvent {
+  final String query;
 
+  FilterProductsEvent({required this.query});
+}

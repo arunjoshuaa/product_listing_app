@@ -2,7 +2,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:product_listing_app/blocs/auth/verification/verificarion_state.dart';
 import 'package:product_listing_app/blocs/auth/verification/verification_event.dart';
 import 'package:product_listing_app/repositories/auth_api_service.dart';
-
 class VerificationBloc extends Bloc<VerificationEvent,VerificationState>{
   final AuthApiService verificationApiService;
   VerificationBloc({required this.verificationApiService}):super(VerificationIntialState()){
@@ -17,7 +16,6 @@ try {
   }
 } catch (e) {
   emit(VerificationErrorState(e.toString()));
-  
 }
   }
 }

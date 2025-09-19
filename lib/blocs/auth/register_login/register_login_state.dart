@@ -1,10 +1,8 @@
 import 'package:equatable/equatable.dart';
-
 abstract class RegisterLoginState extends Equatable {
   @override
   List<Object>get props=>[];
 }
-
 class RegisterLoginInitalState extends RegisterLoginState{}
 class RegisterLoginLoadingState extends RegisterLoginState{}
 class RegisterLoginSuccessState extends RegisterLoginState{
@@ -19,4 +17,3 @@ class RegisterLoginErrorState extends RegisterLoginState{
   @override
   List<Object>get props=>[message];
 }
-

@@ -4,7 +4,6 @@ abstract class VerificationState extends Equatable {
   @override
   List<Object>get props=>[];
 } 
-
 class VerificationIntialState extends VerificationState{}
 class VerificationLoadingState extends VerificationState{}
 class VerificationSuccessState extends VerificationState{

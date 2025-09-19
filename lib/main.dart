@@ -8,11 +8,20 @@ import 'package:product_listing_app/blocs/banner/banner_bloc.dart';
 import 'package:product_listing_app/blocs/banner/banner_event.dart';
 import 'package:product_listing_app/blocs/product/product_bloc.dart';
 import 'package:product_listing_app/blocs/product/product_event.dart';
+import 'package:product_listing_app/blocs/search/search_bloc.dart';
+import 'package:product_listing_app/blocs/search/search_event.dart';
+import 'package:product_listing_app/blocs/user/user_bloc.dart';
+import 'package:product_listing_app/blocs/user/user_event.dart';
+import 'package:product_listing_app/blocs/wishlist/wishlist_product_bloc.dart';
+import 'package:product_listing_app/blocs/wishlist/wishlist_product_event.dart';
 import 'package:product_listing_app/config/app_router.dart';
 import 'package:product_listing_app/core/storage_service.dart';
 import 'package:product_listing_app/repositories/auth_api_service.dart';
 import 'package:product_listing_app/repositories/banner_api_service.dart';
 import 'package:product_listing_app/repositories/produc_api_service.dart';
+import 'package:product_listing_app/repositories/profie_api_service.dart';
+import 'package:product_listing_app/repositories/search_api_service.dart';
+import 'package:product_listing_app/repositories/wishlist_api_service.dart';
 import 'package:product_listing_app/screens/splash_screen.dart';
 
 const _primaryColor = Color(0xFF5E5BE2);
@@ -27,10 +36,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  MultiBlocProvider(
      providers: [
-      BlocProvider(  create: (context) => ProductBloc(apiService:ProducApiService())..add(FetchProductsEvent()),),
+      BlocProvider(  create: (context) => ProductBloc(apiService:ProducApiService())..add(FetchProducts()),),
       BlocProvider(create: (context)=>BannerBloc(bannerApiService:BannerApiService())..add(FetchBannersEvent())),
-      BlocProvider(create: (context)=>RegisterLoginBloc(registerLoginApiService: AuthApiService(), secureStorageService: SecureStorageService()))
-      
+      BlocProvider(create: (context)=>RegisterLoginBloc(registerLoginApiService: AuthApiService(), secureStorageService: SecureStorageService())),
+      BlocProvider(  create: (context) => UserBloc(profileApiService: ProfieApiService())..add(FetchUserEvent()),),
+            BlocProvider(  create: (context) => WishlistProductBloc(wishlistApiService: WishlistApiService())..add(FetchWishlistProducts()),),
+ BlocProvider(
+      create: (context) => SearchBloc(searchApiService: SearchApiService()),
+  
+    )
     
       ],
       child: MaterialApp.router(

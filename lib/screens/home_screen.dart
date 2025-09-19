@@ -5,10 +5,14 @@ import 'package:product_listing_app/blocs/banner/banner_state.dart';
 import 'package:product_listing_app/blocs/product/product_bloc.dart';
 import 'package:product_listing_app/blocs/product/product_event.dart';
 import 'package:product_listing_app/blocs/product/product_state.dart';
+import 'package:product_listing_app/blocs/search/search_bloc.dart';
+import 'package:product_listing_app/blocs/search/search_event.dart';
+import 'package:product_listing_app/blocs/search/search_state.dart';
 import 'package:product_listing_app/models/product_model.dart';
 import 'package:product_listing_app/repositories/produc_api_service.dart';
 import 'package:product_listing_app/screens/widgets/banner_carousel_widget.dart';
 import 'package:product_listing_app/screens/widgets/product_card_widget.dart';
+import 'package:product_listing_app/screens/widgets/product_grid_list.dart';
 import 'package:product_listing_app/screens/widgets/searchbar_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,6 +23,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+        context.read<ProductBloc>().add(FetchProducts());
+
+  }
+
   // List popularProductNames = [
   //   "Grain Peppers",
   //   "Organic Dry Turmeric",
@@ -46,6 +58,8 @@ class _HomeScreenState extends State<HomeScreen> {
   // List categoryName=['Popular','Latest',];
   @override
   Widget build(BuildContext context) {
+      final searchController=TextEditingController();
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -53,7 +67,30 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.only(top: 40, left: 20, right: 20),
           child: Column(
             children: [
-              const SearchbarWidget(),
+            SearchbarWidget(
+  searchController: searchController,
+  onChanged: (query) {
+    context.read<SearchBloc>().add(SearchProductEvent(query: query));
+  },
+),
+BlocBuilder<SearchBloc, SearchState>(
+  builder: (context, state) {
+    if (state is SearchingState) {
+      return const Center(child: CircularProgressIndicator());
+    } else if (state is SearchCompleteState) {
+      if (state.products.isEmpty) {
+        return const Center(child: Text("No results found."));
+      }
+
+      return ProductGrid(products: state.products);
+    } else if (state is SearchErrorState) {
+      return Center(child: Text("Error: ${state.message}"));
+    }
+
+    return const SizedBox.shrink(); // Initial or idle state
+  },
+),
+
               const SizedBox(height: 20),
                SizedBox(height: 200, child: BlocBuilder<BannerBloc,BannerState>(
                 builder: (context, state) {
@@ -218,42 +255,3 @@ class ProductListSection extends StatelessWidget {
 //     );
 //   }
 // }
-
-class ProductGrid extends StatelessWidget {
-  const ProductGrid({
-    super.key,
-    required this.products,
-  });
-
-  final List<Product> products;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 500,
-      child: GridView.builder(
-      
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 5,
-          mainAxisExtent: 240,
-        ),
-        itemCount: products.length,
-        itemBuilder: (context, index) {
-          final product = products[index];
-          return ProductCardWidget(
-            price: product.mrp.toString(),
-            offerPrice: product.salePrice.toString(),
-            rating: product.avgRating.toString(),
-            image: product.featuredImage, // Now uses API data
-            productName: product.name, // Now uses API data
-            isFavorite: false,
-          );
-        },
-      ),
-    );
-  }
-}
