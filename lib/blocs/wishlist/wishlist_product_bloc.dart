@@ -33,6 +33,8 @@ class WishlistProductBloc extends Bloc<WishlistProductEvent, WishlistProductStat
       final String message = await wishlistApiService.addRemoveWhishlist(event.productId);
       
       emit(AddorRemoveWishlistItemState(message: message));
+        // Then, trigger a new fetch to get the updated list of products.
+      add(FetchWishlistProducts());
     } catch (e) {
       emit(WishlistProductError(message: e.toString()));
     }

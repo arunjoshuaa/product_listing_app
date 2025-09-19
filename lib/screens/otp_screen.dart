@@ -24,7 +24,7 @@ class _OtpScreenState extends State<OtpScreen> {
     final _formKey = GlobalKey<FormState>();
   final _otpController = TextEditingController();
   int remainingTime = 120;
-  late Timer timer;
+  Timer? timer;
   //change the time format to MM:SS
   // String get formattedTime {
   //   int minutes = (remainigTime ~/ 60);
@@ -38,7 +38,7 @@ class _OtpScreenState extends State<OtpScreen> {
         if (remainingTime > 0) {
           remainingTime--;
         } else {
-          timer.cancel();
+          timer?.cancel();
            remainingTime = 120;
         }
       });
@@ -47,7 +47,7 @@ class _OtpScreenState extends State<OtpScreen> {
   @override
   void dispose() {
     _otpController.dispose();
-    timer.cancel();
+    timer?.cancel();
     super.dispose();
   }
 

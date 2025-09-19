@@ -7,7 +7,7 @@ A Flutter-based eCommerce-style product listing application developed as part of
 ## 📱 Screens Implemented
 
 ✅ Login Screen  
-✅ OTP Screen *(mocked)*  
+✅ OTP Screen  
 ✅ Home Screen (Search + Banner Slider + Product Grid)  
 ✅ Product Tab (Full product list)  
 ✅ Wishlist Page  

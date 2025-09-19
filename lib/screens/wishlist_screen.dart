@@ -30,12 +30,15 @@ class _WishlistScreenState extends State<WishlistScreen> {
             return Center(child:CircularProgressIndicator());
            }
            else if(state is WishlistProductLoaded){
+            if(state.products.isEmpty){
+              return Center(child: Text("No Products Found in Whishlist!!!"),);
+            }
             return ProductGrid(products: state.products);
            }
            else if(state is WishlistProductError){
             return Center(child: Text(state.message),);
            }
-           return SizedBox.shrink();
+           return Center(child: Text("No Items found in the wishlist"),);
         })
       );
      //   child: Center(child: Text("Wishlist Screen"),)),);
